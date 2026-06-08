@@ -21,7 +21,7 @@ module ActiveModel
           attr_name = @base.class.human_attribute_name(error.attribute, :default => attr_name)
           options = { :default => "%{attribute} %{message}", :attribute => attr_name }
 
-          if error.message =~ /^\^/
+          if error.message.is_a?(String) && error.message =~ /^\^/
             options[:default] = "%{message}"
             full_messages << I18n.t(:"errors.dynamic_format", **options.merge(:message => error.message[1..-1]))
           elsif error.message.is_a? Proc
